@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: software.constructs:constructs:3.3.75">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/software/constructs/constructs/3.3.75/constructs-3.3.75.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/software/constructs/constructs/3.3.75/constructs-3.3.75-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/software/constructs/constructs/3.3.75/constructs-3.3.75-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
