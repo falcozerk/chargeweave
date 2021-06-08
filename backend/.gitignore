@@ -2,8 +2,6 @@
 target/
 .idea
 *.iws
-*.iml
-*.ipr
 
 src/main/resources/application-prod.properties
 src/main/resources/chargeweave-gibnut.json
