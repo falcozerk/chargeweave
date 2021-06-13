@@ -24,7 +24,7 @@
     <orderEntry type="library" name="Maven: software.amazon.awscdk:cdk-cx-api:1.102.0" level="project" />
     <orderEntry type="library" name="Maven: software.amazon.awscdk:cdk-region-info:1.102.0" level="project" />
     <orderEntry type="library" name="Maven: software.constructs:constructs:3.3.75" level="project" />
-    <orderEntry type="library" name="Maven: software.amazon.jsii:jsii-runtime:1.29.0" level="project" />
+    <orderEntry type="library" name="Maven: software.amazon.jsii:jsii-runtime:1.30.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.4" level="project" />
