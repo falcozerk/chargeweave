@@ -11,9 +11,9 @@
         <module name="backend" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="backend" target="1.8" />
-      <module name="cloud" target="1.8" />
+    <bytecodeTargetLevel target="16">
+      <module name="backend" target="16" />
+      <module name="cloud" target="16" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
