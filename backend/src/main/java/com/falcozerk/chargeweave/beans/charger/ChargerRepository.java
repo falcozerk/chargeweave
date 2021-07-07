@@ -7,7 +7,8 @@ import java.util.Optional;
 
 @Repository
 public interface ChargerRepository extends JpaRepository<Charger, Long> {
-    Optional<Charger> findById(Long visitId);
-//    Page<Charger> findAllByUser(Long userId, Pageable pageable);
-//    long countByUser(Long userId);
+    Optional<Charger> findById(Long id);
+    Optional<Charger> findBySid(Long chargerId);
+//    Page<Charger> findAllByUser(Integer userId, Pageable pageable);
+//    long countByUser(Integer userId);
 }

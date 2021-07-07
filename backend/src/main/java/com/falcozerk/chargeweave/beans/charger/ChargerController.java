@@ -17,9 +17,6 @@ public class ChargerController extends CwController {
     private ChargerRepository chargerRepo;
 
     @Autowired
-    private ChargerService chargerService;
-
-    @Autowired
     private AppService appService;
 
     @GetMapping("/{chargerId}")

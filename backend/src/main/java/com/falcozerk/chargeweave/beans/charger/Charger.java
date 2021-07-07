@@ -15,7 +15,7 @@ public class Charger extends UserDateAudit implements CwBean {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Integer sid;
+    Long sid;
     String name;
     String streetAddress;
     String city;

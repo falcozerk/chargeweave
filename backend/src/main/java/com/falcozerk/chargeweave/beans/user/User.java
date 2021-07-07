@@ -9,6 +9,8 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,19 +28,20 @@ public class User extends DateAudit implements CwBean {
     @NotBlank
     String username;
 
-    @NaturalId
-    @NotBlank
     @Email
     String email;
 
     @NotBlank
     String password;
 
-    @NotBlank
     String name;
 
-    Integer competitorId;
+    @NotNull
+    Long competitorId;
+
+    @NotBlank
     String handle;
+
     String region;
     String leader;
     String badges;

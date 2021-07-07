@@ -1099,7 +1099,7 @@ If you are still having issues or if you’re using a more exotic environment li
 
 ```
 # NOTE: THIS IS DANGEROUS!
-# It exposes your machine to attacks from the websites you visit.
+# It exposes your machine to attacks from the websites you charger.
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
@@ -1841,7 +1841,7 @@ incognito window to avoid complications with your browser cache.*
 `service-worker.js` [with HTTP caching disabled](http://stackoverflow.com/questions/38843970/service-worker-javascript-update-frequency-every-24-hours).
 If that's not possible—[GitHub Pages](#github-pages), for instance, does not
 allow you to change the default 10 minute HTTP cache lifetime—then be aware
-that if you visit your production site, and then revisit again before
+that if you charger your production site, and then revisit again before
 `service-worker.js` has expired from your HTTP cache, you'll continue to get
 the previously cached assets from the service worker. If you have an immediate
 need to view your updated production deployment, performing a shift-refresh

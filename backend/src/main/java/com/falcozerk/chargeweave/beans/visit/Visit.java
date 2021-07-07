@@ -24,6 +24,13 @@ public class Visit extends DateAudit implements CwBean {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    @NotBlank Instant visitDate;
+    Instant visitDate;
 
+    Long cid;
+    Long sid;
+    Long cidsid;
+    String handle;
+    String supercharger;
+    String date;
+    String oldDate;
 }

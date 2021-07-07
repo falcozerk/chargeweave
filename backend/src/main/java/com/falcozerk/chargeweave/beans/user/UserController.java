@@ -4,7 +4,6 @@ import com.falcozerk.chargeweave.beans.charger.Charger;
 import com.falcozerk.chargeweave.beans.charger.ChargerRepository;
 import com.falcozerk.chargeweave.beans.common.CwController;
 import com.falcozerk.chargeweave.util.PagedResponse;
-import com.falcozerk.chargeweave.beans.visit.VisitRepository;
 import com.falcozerk.chargeweave.auth.CurrentUser;
 import com.falcozerk.chargeweave.auth.UserPrincipal;
 import com.falcozerk.chargeweave.util.AppConstants;
@@ -21,12 +20,6 @@ public class UserController extends CwController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ChargerRepository chargerRepository;
-
-    @Autowired
-    private VisitRepository visitRepository;
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")

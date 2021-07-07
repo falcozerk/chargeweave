@@ -4,7 +4,7 @@ import com.falcozerk.chargeweave.auth.UserPrincipal;
 import com.falcozerk.chargeweave.beans.charger.Charger;
 import com.falcozerk.chargeweave.beans.common.CwBean;
 import com.falcozerk.chargeweave.beans.common.CwService;
-import com.falcozerk.chargeweave.integrations.google.ExcelImporter;
+import com.falcozerk.chargeweave.beans.app.Importer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,15 +43,27 @@ public class UserService extends CwService implements UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-    public void importFrom(ExcelImporter pImporter, Workbook pWorkbook) {
-        ArrayList<User> userList = new ArrayList<>();
-        pImporter.importSheet( userList, pWorkbook, this, pImporter.COMPETITORS_TAB_POS );
-        userRepo.saveAll( userList );
+    public void importFrom(Importer pImporter, Workbook pWorkbook, int pTabId) {
+        pImporter.init( pWorkbook, pTabId );
+        ArrayList<Cell> cellList = new ArrayList<>();
+
+        while( pImporter.importRow( cellList ) ) {
+            userRepo.save( createFrom( pImporter, cellList ) );
+        }
     }
 
-    public CwBean createFrom(ExcelImporter pImporter, ArrayList<Cell> pRow ) {
-        pImporter.reset();
+    public User createFrom(Importer pImporter, ArrayList<Cell> pCellList ) {
         User user = new User();
+
+        user.setHandle( pImporter.getNextString( pCellList ) );
+        user.setRegion( pImporter.getNextString( pCellList ) );
+        user.setLeader( pImporter.getNextString( pCellList ) );
+        user.setBadges( pImporter.getNextString( pCellList ) );
+        user.setCentury( pImporter.getNextString( pCellList ) );
+        user.setCompetitorId( pImporter.getNextLong( pCellList ) );
+
+        user.setUsername( user.getHandle() );
+        user.setPassword( user.getHandle() );
 
         return user;
     }

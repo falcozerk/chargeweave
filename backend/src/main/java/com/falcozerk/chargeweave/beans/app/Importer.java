@@ -1,68 +1,57 @@
-package com.falcozerk.chargeweave.integrations.google;
+package com.falcozerk.chargeweave.beans.app;
 
-import com.falcozerk.chargeweave.beans.charger.ChargerService;
-import com.falcozerk.chargeweave.beans.common.CwService;
-import com.falcozerk.chargeweave.beans.user.UserService;
+import lombok.Data;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExcelImporter {
-    @Autowired ChargerService chargerService;
-    @Autowired UserService userService;
-
-    public static String SPREADSHEET_SPEC = "/SuperchargersVisited.xlsx";
-    public static int SUPERCHARGERS_TAB_POS = 2;
-    public static int COMPETITORS_TAB_POS = 2;
+@Data
+public class Importer {
+    private static final Logger logger = LoggerFactory.getLogger(Importer.class);
 
     int cellPos = -1;
-    public void reset() {
+    ArrayList<String> headerList = new ArrayList<>();
+    Sheet sheet;
+    Iterator<Row> rowIterator;
+
+    public void init( Workbook pWorkbook, int pTabPos ) {
         cellPos = -1;
+        headerList.clear();
+        sheet = pWorkbook.getSheetAt(pTabPos);
+        rowIterator = sheet.rowIterator();
+
+        importHeaders();
     }
 
-    public void importXslx() throws IOException {
-        InputStream in = ExcelImporter.class.getResourceAsStream(SPREADSHEET_SPEC);
-        Workbook workbook = new XSSFWorkbook(in);
+    public boolean importRow( ArrayList<Cell> pCellList ) {
+        pCellList.clear();
+        if ( !rowIterator.hasNext() ) return false;
 
-        try {
-            chargerService.importFrom(this, workbook );
-            userService.importFrom(this, workbook );
+        Row nextRow = rowIterator.next();
+        Iterator<Cell> cellIterator = nextRow.cellIterator();
+
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            pCellList.add(cell);
         }
-        finally{
-            workbook.close();
-            in.close();
-        }
+
+        cellPos = -1;
+
+        return true;
     }
 
-    public void importSheet( ArrayList pList, Workbook workbook, CwService pService, int pTabPos ) {
-        Sheet sheet = workbook.getSheetAt(pTabPos);
-        Iterator<Row> iterator = sheet.iterator();
+    public void importHeaders() {
+        ArrayList<Cell> aCellList = new ArrayList<>();
+        if ( !importRow( aCellList ) ) return;
 
-        boolean aIsFirst = true;
-        while (iterator.hasNext()) {
-
-            Row nextRow = iterator.next();
-            if (aIsFirst) {
-                aIsFirst = false;
-                continue;
-            }
-
-            Iterator<Cell> cellIterator = nextRow.cellIterator();
-            ArrayList<Cell> aCellList = new ArrayList<>();
-
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                aCellList.add(cell);
-            }
-
-            pList.add( pService.createFrom(this, aCellList) );
+        for( Cell cell : aCellList ) {
+            if ( cell.getCellType() != CellType.STRING ) continue;
+            headerList.add( cell.getStringCellValue() );
         }
     }
 
@@ -107,10 +96,22 @@ public class ExcelImporter {
         return null;
     }
 
+    public Long getNextLong(List<Cell> pRow) {
+        Cell cell = getNextCell(pRow);
+        try {
+            if (cell.getCellType().equals(CellType.STRING)) return Long.parseLong(cell.getStringCellValue());
+            if (cell.getCellType().equals(CellType.NUMERIC)) return (long) cell.getNumericCellValue();
+        }
+        catch( Exception e ) {
+            System.err.println( "Bad integer value: " + cell.toString() );
+        }
+        return null;
+    }
+
     public Instant getNextDate(List<Cell> pRow) {
         Cell cell = getNextCell(pRow);
         try {
-            if ( cell.getCellType().equals( CellType.NUMERIC ) ) cell.getDateCellValue().toInstant();
+            if ( cell.getCellType().equals( CellType.NUMERIC ) ) return cell.getDateCellValue().toInstant();
 
             if ( cell.getCellType().equals( CellType.STRING ) )
             {
