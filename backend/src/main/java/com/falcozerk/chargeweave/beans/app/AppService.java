@@ -65,9 +65,9 @@ public class AppService extends CwService {
 
     public String clearData() {
         try {
+            visitRepository.deleteAll();
             userRepository.deleteAll();
             chargerRepository.deleteAll();
-            visitRepository.deleteAll();
         } catch( Exception e ) {
             e.printStackTrace();
             return "Could not connect.";

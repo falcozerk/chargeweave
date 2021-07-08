@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -53,12 +54,23 @@ public class VisitService extends CwService {
         pImporter.setCellPos( aPos );
 
         while ( pImporter.getCellPos() < pCellList.size() - 2 ) {
-            String aHandle = aHeaderList.get(pImporter.getCellPos() );
+            String aHandle = aHeaderList.get(pImporter.getCellPos());
+            if (StringUtils.isEmpty(aHandle) || StringUtils.startsWithIgnoreCase(aHandle, "zz"))
+            {
+                pImporter.setCellPos( pImporter.getCellPos() + 1 );
+                continue;
+            }
+
             Instant aVisitDate = pImporter.getNextDate(pCellList);
-            if ( aVisitDate == null ) continue;
+            if ( aVisitDate == null )
+            {
+                Cell aCell = pCellList.get(pImporter.getCellPos() );
+                String aCellText = aCell.getStringCellValue();
+                if ( StringUtils.isEmpty( aCellText ) ) continue;
+            }
 
             Visit aVisit = createFrom(aChargerId, aHandle, aVisitDate);
-            aVisitList.add( aVisit );
+            if ( aVisit != null ) aVisitList.add( aVisit );
         }
 
         return aVisitList;
@@ -67,10 +79,11 @@ public class VisitService extends CwService {
     public Visit createFrom( Long pChargerId, String pHandle, Instant pVisitDate ) {
         Optional<Charger> aCharger = chargerRepo.findBySid( pChargerId );
         Optional<User> aUser = userRepo.findByUsername( pHandle );
+        if ( !aCharger.isPresent() || !aUser.isPresent()) return null;
 
         Visit visit = new Visit();
-        if ( aCharger.isPresent() ) visit.setCharger( aCharger.get() );
-        if ( aUser.isPresent() ) visit.setUser( aUser.get() );
+        visit.setCharger( aCharger.get() );
+        visit.setUser( aUser.get() );
         visit.setVisitDate( pVisitDate );
 
         return visit;
