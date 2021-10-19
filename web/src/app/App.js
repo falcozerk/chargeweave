@@ -11,6 +11,7 @@ import { AppConfig } from './AppConfig';
 import { addClass, removeClass, isDesktop } from '../util/Functions'
 
 import { Dashboard } from '../dashboard/Dashboard';
+import { PageLogin } from '../pages/login/PageLogin';
 
 import { SampleDash } from '../samples/SampleDash';
 import { Calendar } from '../samples/Calendar';
@@ -168,6 +169,8 @@ const App = () => {
                 layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
 
             <div className="layout-main">
+                <Route path="/login" component={PageLogin} />
+
                 <Route path="/sampleDash" exact component={SampleDash} />
                 <Route path="/calendar" component={Calendar} />
                 <Route path="/crud" component={Crud} />
