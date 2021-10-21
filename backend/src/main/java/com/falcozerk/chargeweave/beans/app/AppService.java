@@ -47,8 +47,8 @@ public class AppService extends CwService {
             Workbook workbook = new XSSFWorkbook(in);
 
             try {
-//                userService.importFrom(importer, workbook, COMPETITORS_TAB_POS );
-//                chargerService.importFrom(importer, workbook, SUPERCHARGERS_TAB_POS );
+                userService.importFrom(importer, workbook, COMPETITORS_TAB_POS );
+                chargerService.importFrom(importer, workbook, SUPERCHARGERS_TAB_POS );
                 visitService.importFrom(importer, workbook, SUPERCHARGERS_TAB_POS );
             }
             finally{
