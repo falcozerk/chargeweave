@@ -1,6 +1,5 @@
 package com.falcozerk.chargeweave.beans.charger;
 
-import com.falcozerk.chargeweave.beans.common.CwBean;
 import com.falcozerk.chargeweave.beans.common.CwService;
 import com.falcozerk.chargeweave.beans.app.Importer;
 import com.falcozerk.chargeweave.beans.visit.VisitService;
@@ -18,10 +17,7 @@ public class ChargerService extends CwService {
     @Autowired
     ChargerRepository chargerRepo;
 
-    @Autowired
-    VisitService visitService;
-
-    private static final Logger logger = LoggerFactory.getLogger(ChargerService.class);
+    static final Logger logger = LoggerFactory.getLogger(ChargerService.class);
 
     public void importFrom(Importer pImporter, Workbook pWorkbook, int pTabId) {
         pImporter.init( pWorkbook, pTabId );
