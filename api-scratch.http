@@ -20,9 +20,9 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/chargers/clearData
+GET http://localhost:8080/api/app/clearData
 
 ###
 
-GET http://localhost:8080/api/chargers/importData
+GET http://localhost:8080/api/app/importData
 
