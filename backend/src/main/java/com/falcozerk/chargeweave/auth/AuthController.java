@@ -29,16 +29,16 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepo;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleRepository roleRepo;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    JwtTokenProvider tokenProvider;
+    JwtProvider tokenProvider;
 
     @GetMapping("/hello")
     public String hello() {
@@ -63,12 +63,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if(userRepo.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if(userRepo.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -80,12 +80,12 @@ public class AuthController {
         user.setEmail( signUpRequest.getEmail() );
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        Role userRole = roleRepo.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 
-        User result = userRepository.save(user);
+        User result = userRepo.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
