@@ -18,21 +18,23 @@ import java.io.InputStream;
 
 @Service
 public class AppService extends CwService {
-    private static final Logger logger = LoggerFactory.getLogger(AppService.class);
+    static final Logger logger = LoggerFactory.getLogger(AppService.class);
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepo;
 
     @Autowired
-    private ChargerRepository chargerRepository;
+    ChargerRepository chargerRepo;
 
     @Autowired
-    private VisitRepository visitRepository;
+    VisitRepository visitRepo;
 
     @Autowired
     ChargerService chargerService;
+    
     @Autowired
     UserService userService;
+    
     @Autowired
     VisitService visitService;
 
@@ -65,9 +67,9 @@ public class AppService extends CwService {
 
     public String clearData() {
         try {
-            visitRepository.deleteAll();
-            userRepository.deleteAll();
-            chargerRepository.deleteAll();
+            visitRepo.deleteAll();
+            userRepo.deleteAll();
+            chargerRepo.deleteAll();
         } catch( Exception e ) {
             e.printStackTrace();
             return "Could not connect.";
