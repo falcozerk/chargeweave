@@ -31,7 +31,7 @@ public class VisitService extends CwService {
     @Autowired
     ChargerRepository chargerRepo;
 
-    private static final Logger logger = LoggerFactory.getLogger(VisitService.class);
+    static final Logger logger = LoggerFactory.getLogger(VisitService.class);
 
     public void importFrom(Importer pImporter, Workbook pWorkbook, int pTabId) {
         pImporter.init( pWorkbook, pTabId );
@@ -43,8 +43,7 @@ public class VisitService extends CwService {
         }
     }
 
-    public ArrayList<Visit> importVisits( Importer pImporter, ArrayList<Cell> pCellList ) {
-        ArrayList<Visit> aVisitList = new ArrayList<>();
+    public ArrayList<Visit> importVisits( Importer pImporter, ArrayList<Cell> pCellList ) {ArrayList<Visit> aVisitList = new ArrayList<>();
         ArrayList<String> aHeaderList = pImporter.getHeaderList();
         int aPos = -1;
         while( !aHeaderList.get( ++aPos ).equals( FIRST_VISIT_HEADER_NAME ) );
@@ -55,7 +54,7 @@ public class VisitService extends CwService {
 
         while ( pImporter.getCellPos() < pCellList.size() - 2 ) {
             String aHandle = aHeaderList.get(pImporter.getCellPos());
-            if (StringUtils.isEmpty(aHandle) || StringUtils.startsWithIgnoreCase(aHandle, "zz"))
+            if (!StringUtils.hasText(aHandle) || StringUtils.startsWithIgnoreCase(aHandle, "zz"))
             {
                 pImporter.setCellPos( pImporter.getCellPos() + 1 );
                 continue;
@@ -66,7 +65,7 @@ public class VisitService extends CwService {
             {
                 Cell aCell = pCellList.get(pImporter.getCellPos() );
                 String aCellText = aCell.getStringCellValue();
-                if ( StringUtils.isEmpty( aCellText ) ) continue;
+                if ( !StringUtils.hasText( aCellText ) ) continue;
             }
 
             Visit aVisit = createFrom(aChargerId, aHandle, aVisitDate);
