@@ -24,15 +24,4 @@ public class ChargerController extends CwController {
         return chargerRepo.findById(chargerId);
     }
 
-    @GetMapping("/importData")
-    public String importData() {
-        return appService.importData();
-    }
-
-    @GetMapping("/clearData")
-    public String clearData() {
-        return appService.clearData();
-    }
-
-
 }
