@@ -11,7 +11,7 @@ import { AppConfig } from './AppConfig';
 import { addClass, removeClass, isDesktop } from '../util/Functions'
 
 import { Dashboard } from '../dashboard/Dashboard';
-import { PageLogin } from '../pages/login/PageLogin';
+// import { PageLogin } from '../pages/login/PageLogin';
 
 import { SampleDash } from '../samples/SampleDash';
 import { Calendar } from '../samples/Calendar';
@@ -34,13 +34,11 @@ import './App.scss';
 
 const App = () => {
 
-    const [layoutMode, setLayoutMode] = useState('static');
+    const [layoutMode, setLayoutMode] = useState('overlay');
     const [layoutColorMode, setLayoutColorMode] = useState('dark')
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
-    const [inputStyle, setInputStyle] = useState('outlined');
-    const [ripple, setRipple] = useState(false);
     const sidebar = useRef();
 
     const history = useHistory();
@@ -55,15 +53,6 @@ const App = () => {
             removeClass(document.body, 'body-overflow-hidden');
         }
     }, [mobileMenuActive]);
-
-    const onInputStyleChange = (inputStyle) => {
-        setInputStyle(inputStyle);
-    }
-
-    const onRipple = (e) => {
-        PrimeReact.ripple = e.value;
-        setRipple(e.value)
-    }
 
     const onLayoutModeChange = (mode) => {
         setLayoutMode(mode)
@@ -139,14 +128,12 @@ const App = () => {
 
     const logo = layoutColorMode === 'dark' ? 'assets/layout/images/charger-light.svg' : 'assets/layout/images/charger-dark.svg';
 
-    const wrapperClass = classNames('layout-wrapper', {
+    const wrapperClass = classNames('layout-wrapper', 'p-input-filled', {
         'layout-overlay': layoutMode === 'overlay',
         'layout-static': layoutMode === 'static',
         'layout-static-sidebar-inactive': staticMenuInactive && layoutMode === 'static',
         'layout-overlay-sidebar-active': overlayMenuActive && layoutMode === 'overlay',
-        'layout-mobile-sidebar-active': mobileMenuActive,
-        'p-input-filled': inputStyle === 'filled',
-        'p-ripple-disabled': ripple === false
+        'layout-mobile-sidebar-active': mobileMenuActive
     });
 
     const sidebarClassName = classNames('layout-sidebar', {
@@ -165,11 +152,11 @@ const App = () => {
                 </div>
             </CSSTransition>
 
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
-                layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
+            {/*<AppConfig layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} */}
+            {/*           layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />*/}
 
             <div className="layout-main">
-                <Route path="/login" component={PageLogin} />
+                {/*<Route path="/login" component={PageLogin} />*/}
 
                 <Route path="/sampleDash" exact component={SampleDash} />
                 <Route path="/calendar" component={Calendar} />

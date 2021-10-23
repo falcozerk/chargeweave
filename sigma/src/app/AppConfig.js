@@ -66,21 +66,6 @@ export const AppConfig = (props) => {
             </div>
             <div className="layout-config-content">
 
-                <h5 style={{ marginTop: '0px' }}>Input Style</h5>
-                <div className="p-formgroup-inline">
-                    <div className="p-field-radiobutton">
-                        <RadioButton inputId="input_outlined" name="inputstyle" value="outlined" onChange={(e) => props.onInputStyleChange(e.value)} checked={props.inputStyle === 'outlined'} />
-                        <label htmlFor="input_outlined">Outlined</label>
-                    </div>
-                    <div className="p-field-radiobutton">
-                        <RadioButton inputId="input_filled" name="inputstyle" value="filled" onChange={(e) => props.onInputStyleChange(e.value)} checked={props.inputStyle === 'filled'} />
-                        <label htmlFor="input_filled">Filled</label>
-                    </div>
-                </div>
-
-                <h5>Ripple Effect</h5>
-                <InputSwitch checked={props.rippleEffect} onChange={props.onRippleEffect} />
-
                 <h5>Menu Type</h5>
                 <div className="p-formgroup-inline">
                     <div className="p-field-radiobutton">
